@@ -1,34 +1,69 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup
-from urlparse import urljoin
+#!/usr/bin/python
 
-URL = 'http://exam.nmu.ac.in/online%20result/aspx/online%20result.aspx'
-FACULTY = 'Law'
+from selenium import webdriver
+from general import *
+from datetime import datetime
+from config import *
+
+
 def get_file_list():
     ''' Utility function to get list of available files on result website '''
-    driver = webdriver.PhantomJS('./phantomjs')
+    driver = webdriver.PhantomJS(PATH_TO_PHANTOMJS)
     print "Downloading web page"
-    driver.get(URL)
+    driver.get(BASE_URL)
     print "Web Page downloaded"
-    element = driver.find_element_by_link_text(FACULTY)
-    element.click()
-    file_list_html = driver.find_element_by_id('FileList').get_attribute('innerHTML')
-    driver.close()
-    return convert_html_to_list(file_list_html)
-    
-def convert_html_to_list(html):
-    result = []
-    soup = BeautifulSoup(html, 'html.parser')
-    if soup.text.strip().lower() == 'no record found.':
-  	print 'Results not yet declared'
+    try:
+        element = driver.find_element_by_link_text(FACULTY)
+        element.click()
+        file_list_html = driver.find_element_by_id(
+            'FileList').get_attribute('innerHTML')
+    except Exception as e:
+        import ast
+        import shutil
+        msg = ("\033[91m" + "Something went wrong. Check faculty name. "
+               "ERROR: " + ast.literal_eval(e.msg)['errorMessage'] + "\033[0m"
+               "\nDeleting directory " + DL_FOLDER.split('/')[-2])
+        print msg
+        shutil.rmtree(DL_FOLDER)
         exit()
-    for link in soup.find_all('a'):
-  	item = {
-            'Name' : link.text,
-            'Link' : urljoin(URL, link.get('href'))
-        }
-        result.append(item)
-    return result
- 
-for item in get_file_list():
-    print item
+    finally:
+        driver.close()
+    return convert_html_to_list(file_list_html, BASE_URL, DL_FOLDER)
+
+
+def get_files(files, dl_file_name):
+    ''' Download files only if the do not exist '''
+    downloaded_file_names = file_to_set(dl_file_name)
+    if not files:
+        print 'No files found to download.'
+        return None
+    new_files = []
+    for file in files:
+        if file['name'] in downloaded_file_names:
+            print 'File "{}" is already downloaded.'.format(
+                os.path.basename(file['name']))
+            continue
+        new_files.append(download_file(file, dl_file_name))
+    return new_files
+
+
+def setup():
+    print '\n' + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    print '=' * 40
+    print "Fetching results related to " + FACULTY + " faculty"
+    create_results_dir(DL_FOLDER)
+    create_file(DL_FILE_NAME)
+
+
+def main():
+    setup()
+    files = get_file_list()
+    new_files = get_files(files, DL_FILE_NAME)
+    if new_files:
+        print 'Preparing email to send new files'
+        prepare_email(new_files, RECEIVERS)
+    else:
+        print 'No new files to mail.'
+
+if __name__ == '__main__':
+    main()

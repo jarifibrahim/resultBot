@@ -1,0 +1,23 @@
+import sys
+import os
+
+BASE_URL = 'http://exam.nmu.ac.in/online%20result/aspx/online%20result.aspx'
+
+if len(sys.argv) != 2:
+    msg = ("Usage: python main.py <Faculty>"
+           "\n\nCheck " + BASE_URL +
+           " for the list of faculties.")
+    print msg
+    exit(1)
+
+FACULTY = sys.argv[1]
+BASE_DIR = os.path.dirname(os.path.realpath(__file__)) + '/'
+DL_FOLDER = BASE_DIR + FACULTY + '-results/'
+DL_FILE_NAME = DL_FOLDER + 'downloaded_files.txt'
+RECEIVERS = ['jarifibrahim@gmail.com']
+PATH_TO_PHANTOMJS = BASE_DIR + 'phantomjs'
+
+# email authentication credentials
+USERNAME = 'jarifibrahim@gmail.com'
+PASSWORD = ''  # App password
+EMAIL_SMTP = 'smtp.gmail.com:587'
