@@ -14,10 +14,14 @@ FACULTY = sys.argv[1]
 BASE_DIR = os.path.dirname(os.path.realpath(__file__)) + '/'
 DL_FOLDER = BASE_DIR + FACULTY + '-results/'
 DL_FILE_NAME = DL_FOLDER + 'downloaded_files.txt'
-RECEIVERS = ['jarifibrahim@gmail.com']
 PATH_TO_PHANTOMJS = BASE_DIR + 'phantomjs'
 
 # email authentication credentials
 USERNAME = 'jarifibrahim@gmail.com'
 PASSWORD = ''  # App password
 EMAIL_SMTP = 'smtp.gmail.com:587'
+
+# The following three variables should be set
+SEND_TO = ['jarifibrahim@gmail.com']
+CC = []
+BCC = []

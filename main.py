@@ -3,7 +3,8 @@
 from selenium import webdriver
 from general import *
 from datetime import datetime
-from config import *
+from config import FACULTY, DL_FOLDER, DL_FILE_NAME, PATH_TO_PHANTOMJS, \
+    BASE_URL
 
 
 def get_file_list():
@@ -51,7 +52,7 @@ def setup():
     print '\n' + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print '=' * 40
     print "Fetching results related to " + FACULTY + " faculty"
-    create_results_dir(DL_FOLDER)
+    create_dir(DL_FOLDER)
     create_file(DL_FILE_NAME)
 
 
@@ -61,7 +62,7 @@ def main():
     new_files = get_files(files, DL_FILE_NAME)
     if new_files:
         print 'Preparing email to send new files'
-        prepare_email(new_files, RECEIVERS)
+        prepare_email(new_files)
     else:
         print 'No new files to mail.'
 

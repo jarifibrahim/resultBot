@@ -4,15 +4,23 @@ from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate, formataddr
-from config import USERNAME, PASSWORD, EMAIL_SMTP
+from config import USERNAME, PASSWORD, EMAIL_SMTP, SEND_TO, CC, BCC
 
 
-def send_mail(send_to, subject, text, files=None):
+def send_mail(subject, text, send_to=SEND_TO, cc=CC, bcc=BCC, files=None):
+
     msg = MIMEMultipart()
     msg['From'] = formataddr(("ResultBot", USERNAME))
-    msg['To'] = COMMASPACE.join(send_to)
+    msg['To'] = COMMASPACE.join(send_to) if type(send_to) is list else send_to
     msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = subject
+
+    if cc:
+        msg['Cc'] = COMMASPACE.join(cc) if type(cc) is list else cc
+        send_to += [msg['Cc']]
+    if bcc:
+        bcc = COMMASPACE.join(bcc) if type(bcc) is list else bcc
+        send_to += [bcc]
 
     msg.attach(MIMEText(text))
     # Attach files to email
@@ -44,11 +52,9 @@ def send(smtp, send_to, msg):
                '\033[0m')
         print err
     except Exception as e:
-        err = (
-            '\033[91m'
-            'ERROR: Some went wrong. Email not sent. \n' + e +
-            '\033[0m')
-        print err
+        print '\033[91m' + 'ERROR: Some went wrong. Email not sent.'
+        print e
+        print '\033[0m'
     finally:
         smtp.close()
         exit()

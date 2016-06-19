@@ -8,7 +8,7 @@ import urllib
 from config import FACULTY
 
 
-def create_results_dir(directory):
+def create_dir(directory):
     if not os.path.exists(directory):
         print 'Creating directory ' + directory.split('/')[-2]
         os.makedirs(directory)
@@ -86,7 +86,7 @@ def download_file(file, dl_file_name):
     return file_name
 
 
-def prepare_email(file_paths, receivers):
+def prepare_email(file_paths):
     ''' Prepare email to be sent'''
     file_names = [fp.split('/')[-1] for fp in file_paths]
     subject = "NMU " + FACULTY + " Results Found"
@@ -99,5 +99,5 @@ def prepare_email(file_paths, receivers):
         "",
     ] + file_names + ["", "", "Cheers,", "ResultBot"])
     print "Sending email..."
-    send_mail(receivers, subject,
+    send_mail(subject,
               message, files=file_paths)
