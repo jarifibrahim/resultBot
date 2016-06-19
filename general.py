@@ -97,7 +97,12 @@ def prepare_email(file_paths):
         "I found the following files (see attachments)"
         " related to NMU {} results.".format(FACULTY),
         "",
-    ] + file_names + ["", "", "Cheers,", "ResultBot"])
+    ] + file_names)
+    end_message = ("\n\n\nYou received this email because you were added to "
+                   "the mailing list by Ibrahim Jarif.\nIf you wish to "
+                   "unsubscribe, please reply back to this email."
+                   "\n\nCheers,\nResultBot")
+    message += end_message
     print "Sending email..."
     send_mail(subject,
               message, files=file_paths)
