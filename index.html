@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Resultbot by jarifibrahim</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Resultbot</h1>
+        <p>Python script to download NMU results and send as email</p>
+
+        <p class="view"><a href="https://github.com/jarifibrahim/resultBot">View the Project on GitHub <small>jarifibrahim/resultBot</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jarifibrahim/resultBot/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jarifibrahim/resultBot/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jarifibrahim/resultBot">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="resultbot" class="anchor" href="#resultbot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>resultBot</h1>
+
+<hr>
+
+<p>A python script to download and email results from <a href="http://exam.nmu.ac.in/online%20result/aspx/online%20result.aspx">North Maharashtra University results website</a>.</p>
+
+<h3>
+<a id="usage-demonstration" class="anchor" href="#usage-demonstration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage Demonstration</h3>
+
+<p><img src="http://i.imgur.com/pnqI8uj.png" alt="Demonstration"></p>
+
+<h3>
+<a id="sample-email" class="anchor" href="#sample-email" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Email</h3>
+
+<p><img src="http://i.imgur.com/d8tqoGY.png" alt="Sample Email"></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li><a href="https://www.python.org/downloads/">Python 2.7</a></li>
+<li><a href="http://phantomjs.org/">PhantomJs</a></li>
+<li><a href="http://selenium-python.readthedocs.io/">Selenium</a></li>
+<li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a></li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<ol>
+<li>Clone repository <code>git clone https://github.com/jarifibrahim/resutBot.git</code>.</li>
+<li>Python 2.7 download and installation instructions can be found <a href="https://www.python.org/downloads/">here</a>.</li>
+<li>Download PhantomJS from <a href="http://phantomjs.org/download.html">here</a>. Extract the files and copy <code>phantomjs</code> file from <code>bin</code> directory inside extracted files to repository root folder.</li>
+<li>Download and install Selenium using <code>pip install selenium</code>.</li>
+<li>Download and install BeautifulSoup using <code>pip install bs4</code>.</li>
+</ol>
+
+<h2>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup</h2>
+
+<p>Edit the file <em>config.py</em> to change default configuration.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p><code>$ ./main.py &lt;faculty&gt;</code></p>
+
+<p>eg: <code>$ ./main.py "Engg and Tech"</code>`</p>
+
+<h2>
+<a id="setup-script-to-run-periodically-to-check-for-results" class="anchor" href="#setup-script-to-run-periodically-to-check-for-results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup script to run periodically to check for results</h2>
+
+<h3>
+<a id="on-linux" class="anchor" href="#on-linux" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>On Linux</h3>
+
+<p>To execute the script periodically setup <code>cron</code> as follows:</p>
+
+<ol>
+<li>
+<p>Execute <code>crontab -e</code> and append the line.</p>
+
+<p>To execute after every 5 minutes:</p>
+
+<p><code>*/5 * * * * /path/to/main.py &gt;&gt; /path/to/save/logs 2&amp;&gt;1</code> </p>
+
+<p>To execute after every 15 minutes:</p>
+
+<p><code>*/15 * * * * /path/to/main.py &gt;&gt; /path/to/save/logs 2&amp;&gt;1</code> </p>
+</li>
+</ol>
+
+<h2>
+<a id="on-windows" class="anchor" href="#on-windows" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>On Windows</h2>
+
+<p>Use <a href="http://windows.microsoft.com/en-us/windows/schedule-task">Windows Task Scheduler</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jarifibrahim">jarifibrahim</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
