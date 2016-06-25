@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException, \
+    NoSuchElementException
 from general import *
 from datetime import datetime
 from config import FACULTY, DL_FOLDER, DL_FILE_NAME, PATH_TO_PHANTOMJS, \
@@ -11,23 +13,32 @@ def get_file_list():
     ''' Utility function to get list of available files on result website '''
     driver = webdriver.PhantomJS(PATH_TO_PHANTOMJS)
     print "Downloading web page"
-    driver.get(BASE_URL)
-    print "Web Page downloaded"
+    driver.set_page_load_timeout(10)
+    file_list_html = ''
     try:
+        driver.get(BASE_URL)
+        print "Web Page downloaded"
         element = driver.find_element_by_link_text(FACULTY)
         element.click()
         file_list_html = driver.find_element_by_id(
             'FileList').get_attribute('innerHTML')
+        msg = 'Searching for results'
+    except TimeoutException as e:
+        import ast
+        msg = ("Result website took too long to respond"
+               " ( >10sec). Please try again later.")
+        msg += "\n" + ast.literal_eval(e.msg)['errorMessage']
+    except NoSuchElementException as e:
+        import ast
+        msg = ("Structure of result website has changed. Please contact "
+               "jarifibrahim@gmail.com to fix this issue.")
+        msg += "\n" + ast.literal_eval(e.msg)['errorMessage']
     except Exception as e:
         import ast
-        import shutil
-        msg = ("\033[91m" + "Something went wrong. Check faculty name. "
-               "ERROR: " + ast.literal_eval(e.msg)['errorMessage'] + "\033[0m"
-               "\nDeleting directory " + DL_FOLDER.split('/')[-2])
-        print msg
-        shutil.rmtree(DL_FOLDER)
-        exit()
+        msg = "Something went wrong. Check faculty name."
+        msg += "\n" + ast.literal_eval(e.msg)['errorMessage']
     finally:
+        print ("\033[91m" + msg + "\033[0m")
         driver.close()
     return convert_html_to_list(file_list_html, BASE_URL, DL_FOLDER)
 
