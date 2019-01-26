@@ -25,7 +25,7 @@ Edit the file *config.py* to change default configuration.
 ## Usage
 `$ ./main.py <faculty>`
 
-eg: `$ ./main.py "Engg and Tech"``
+eg: `$ ./main.py "Engg and Tech"`
 
 ## Setup script to run periodically to check for results
 ### On Linux
