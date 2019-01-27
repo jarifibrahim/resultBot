@@ -1,22 +1,23 @@
 ''' Some utility functions '''
 
 from bs4 import BeautifulSoup
-from urlparse import urljoin
+from urllib.parse import urlparse
 import os
 from send_email import send_mail
 import urllib
 from config import FACULTY
+from send_sms import send_sms
 
 
 def create_dir(directory):
     if not os.path.exists(directory):
-        print 'Creating directory ' + directory.split('/')[-2]
+        print ('Creating directory ' + directory.split('/')[-2])
         os.makedirs(directory)
 
 
 def create_file(file_path):
     if not os.path.exists(file_path):
-        print 'Creating file ' + os.path.basename(file_path)
+        print ('Creating file ' + os.path.basename(file_path))
         append_to_file("", file_path)
 
 
@@ -55,7 +56,7 @@ def check_result_declared(text):
         msg = ('\033[93m'
                'Results not yet declared. Try again later.'
                '\033[0m')
-        print msg
+        print (msg)
         return False
     return True
 
@@ -79,9 +80,9 @@ def download_file(file, dl_file_name):
     file_name = file['name']
     file_name_short = os.path.basename(file_name)
     link = file['link']
-    print 'Downloading file: "%s"' % file_name_short
+    print ('Downloading file: "%s"' % file_name_short)
     urllib.urlretrieve(link, file_name)
-    print '"%s" file saved' % file_name_short
+    print ('"%s" file saved' % file_name_short)
     append_to_file(file_name, dl_file_name)
     return file_name
 
@@ -103,6 +104,25 @@ def prepare_email(file_paths):
                    "unsubscribe, please reply back to this email."
                    "\n\nCheers,\nResultBot")
     message += end_message
-    print "Sending email..."
+    print ("Sending email...")
     send_mail(subject,
               message, files=file_paths)
+
+
+def prepare_sms(file_paths):
+    ''' Prepare sms to be sent'''
+    file_names = [fp.split('/')[-1] for fp in file_paths]
+    subject = "NMU " + FACULTY + " Results Found"
+    message = "\r\n".join([
+        "",
+        "{}\n".format(subject),
+        "Hi There!",
+        "I'm ResultBot. I keep searching for NMU results.",
+        "I found the following files"
+        " related to NMU {} results.".format(FACULTY),
+        "",
+    ] + file_names)
+    end_message = ("\n\nCheers,\n ResultBot")
+    message += end_message
+    print ("Sending sms...")
+    send_sms(message)
