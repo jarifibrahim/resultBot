@@ -1,7 +1,7 @@
 ''' Some utility functions '''
 
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
+from urlparse import urljoin
 import os
 from send_email import send_mail
 import urllib
