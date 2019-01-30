@@ -1,11 +1,9 @@
 import requests
 import json
 import general
+from config import URL, APIKEY, SECRETKEY, PHONENO
 
-URL = 'http://www.way2sms.com/api/v1/sendCampaign'
-
-
-# get request
+# get request 
 def sendPostRequest(reqUrl, apiKey, secretKey, useType, phoneNo, senderId, textMessage):
   req_params = {
   'apikey':apiKey,
@@ -21,7 +19,7 @@ def sendPostRequest(reqUrl, apiKey, secretKey, useType, phoneNo, senderId, textM
 def send_sms(message):
     try:
         # get response
-        response = sendPostRequest(URL, apiKey, secretKey, 'stage', phoneNo, 'WAYSMS', message )
+        response = sendPostRequest(URL, APIKEY, SECRETKEY, 'stage', PHONENO, 'WAYSMS', message )
         # print response if you want
         print (response.text)
     except Exception as e:
