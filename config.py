@@ -7,7 +7,7 @@ if len(sys.argv) != 2:
     msg = ("Usage: python main.py <Faculty>"
            "\n\nCheck " + BASE_URL +
            " for the list of faculties.")
-    print msg
+    print (msg)
     exit(1)
 
 FACULTY = sys.argv[1]
@@ -20,6 +20,12 @@ PATH_TO_PHANTOMJS = BASE_DIR + 'phantomjs'
 USERNAME = 'jarifibrahim@gmail.com'
 PASSWORD = ''  # App password
 EMAIL_SMTP = 'smtp.gmail.com:587'
+
+# sms authentication credentials
+URL = 'http://www.way2sms.com/api/v1/sendCampaign'
+APIKEY = '' # way2sms apiKey
+SECRETKEY = '' # way2sms secretKey
+PHONENO = # receiver's valid phone number(indian) without country code
 
 # The following three variables should be set
 SEND_TO = ['jarifibrahim@gmail.com']
