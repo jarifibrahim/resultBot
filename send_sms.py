@@ -3,7 +3,7 @@ import json
 import general
 from config import URL, APIKEY, SECRETKEY, PHONENO
 
-# get request 
+# sending post request
 def send_post_request(reqUrl, apiKey, secretKey, useType, phoneNo, senderId, textMessage):
   req_params = {
   'apikey':apiKey,
@@ -18,7 +18,7 @@ def send_post_request(reqUrl, apiKey, secretKey, useType, phoneNo, senderId, tex
 
 def send_sms(message):
     try:
-        # get response
+        # getting response and save as response object
         response = send_post_request(URL, APIKEY, SECRETKEY, 'stage', PHONENO, 'WAYSMS', message )
         # print response if you want
         print (response.text)
