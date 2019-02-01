@@ -1,15 +1,14 @@
 #!/usr/bin/python
 
-from selenium import webdriver
+from selenium import webdriver 
 from selenium.common.exceptions import TimeoutException, \
     NoSuchElementException
 from general import *
 from datetime import datetime
 from config import FACULTY, DL_FOLDER, DL_FILE_NAME, PATH_TO_PHANTOMJS, \
-    BASE_URL
+    BASE_URL, NOTIFY_VIA_MAIL, NOTIFY_VIA_SMS
 
-
-def get_file_list():
+def get_file_list(): 
     ''' Utility function to get list of available files on result website '''
     driver = webdriver.PhantomJS(PATH_TO_PHANTOMJS)
     print ("Downloading web page")
@@ -71,9 +70,12 @@ def main():
     files = get_file_list()
     new_files = get_files(files, DL_FILE_NAME)
     if new_files:
-        print ('Preparing email to send new files and Preparing sms to notify')
-        prepare_email(new_files)
-        prepare_sms(new_files)
+        if NOTIFY_VIA_MAIL:
+            print ('Preparing email to send new files')
+            prepare_email(new_files)
+        if NOTIFY_VIA_SMS:
+            print('Preparing sms for notify')
+            prepare_sms(new_files)
     else:
         print ('No new files to mail.')
 
