@@ -26,17 +26,8 @@ def send_sms(message):
         res =  response.text
         if 'success' in res:
             print('\033[92m' + 'Successfully sent the sms' + '\033[0m')
-    except requests.exceptions.HTTPError as eh:
-        print('\033[91m' + 'An HTTP error occurred. %s' %eh)
-        print('\033[0m') 
-    except requests.exceptions.ConnectionError as ec:
-        print('\033[91m' + 'A Connection error occurred %s' %ec)
-        print('\033[0m')
-    except requests.exceptions.Timeout as et:
-        print('\033[91m' + 'It is ConnectTimeout or ReadTimeout %s' %et)
-        print('\033[0m')
     except Exception as e:
-        print('\033[91m' + "Something went wrong. Failed to send SMS: %s" % e)
+        print('\033[91m' + "Failed to send SMS: %s" % e)
         print('\033[0m')
     finally :
          pass
