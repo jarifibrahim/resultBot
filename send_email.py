@@ -52,9 +52,8 @@ def send(smtp, send_to, msg):
                '\033[0m')
         print err
     except Exception as e:
-        print '\033[91m' + 'ERROR: Some went wrong. Email not sent.'
+        print '\033[91m' + 'ERROR: Something went wrong. Email not sent.'
         print e
         print '\033[0m'
     finally:
         smtp.close()
-        exit()
